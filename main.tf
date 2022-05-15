@@ -3,7 +3,7 @@ data "azuread_application" "main" {
 }
 
 resource "azuread_application_federated_identity_credential" "main" {
-  application_object_id = azuread_application.main.object_id
+  application_object_id = data.azuread_application.main.object_id
   display_name          = "my-repo-deploy"
   description           = "Deployments for my-repo"
   audiences             = ["api://AzureADTokenExchange"]
