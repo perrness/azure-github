@@ -36,7 +36,7 @@ resource "github_actions_secret" "backend_container_name" {
 resource "github_actions_secret" "backend_key" {
   repository       = var.repo_name
   secret_name      = "AZURE_BACKEND_KEY"
-  plaintext_value  = var.repo_name
+  plaintext_value  = "${var.repo_name}state.tfstate"
 }
 
 resource "github_actions_secret" "backend_resource_group_name" {
