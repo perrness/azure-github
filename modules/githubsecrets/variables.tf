@@ -1,31 +1,31 @@
-var "repo_name" {
+variable "repo_name" {
     type = string
 }
 
-var "application_id" {
+variable "application_id" {
     type = string
 }
 
-var "ad_tenant_id" {
+variable "ad_tenant_id" {
     type = string
 }
 
-var "backend_container_name" {
+variable "backend_container_name" {
     type = string
 }
 
-var "backend_resource_group_name" {
+variable "backend_resource_group_name" {
     type = string
 }
 
-var "backend_storage_account_name" {
+variable "backend_storage_account_name" {
     type = string
 }
 
-var "client_secret" {
+variable "client_secret" {
     type = string
 }
 
-var "subscription_id" {
+variable "subscription_id" {
     type = string
 }
