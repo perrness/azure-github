@@ -2,88 +2,46 @@ data "azuread_application" "main" {
   display_name = "github-app"
 }
 
-data "azurerm_key_vault" "example" {
-  name                = "mykeyvault"
-  resource_group_name = "some-resource-group"
+data "azurerm_key_vault" "main" {
+  name                = var.kv_name
+  resource_group_name = var.rg_name
 }
 
-resource "azuread_application_federated_identity_credential" "main" {
-  for_each = var.repos
-
-  application_object_id = data.azuread_application.main.object_id
-  display_name          = each.value
-  description           = "Deployments for ${each.value}"
-  audiences             = ["api://AzureADTokenExchange"]
-  issuer                = "https://token.actions.githubusercontent.com"
-  subject               = "repo:perrness/${each.value}:ref:refs/heads/main"
+data "azurerm_key_vault_secret" "backend_storage_account_name" {
+  name         = "AZURE-BACKEND-STORAGE-ACCOUNT-NAME"
+  key_vault_id = data.azurerm_key_vault.main.id
 }
 
-data "github_actions_public_key" "main" {
-  for_each = var.repos
-
-  repository = each.value
+data "azurerm_key_vault_secret" "backend_resource_group_name" {
+  name         = "ZURE-BACKEND-RESOURCE-GROUP-NAME"
+  key_vault_id = data.azurerm_key_vault.main.id
 }
 
-resource "github_actions_secret" "azure_ad_client_id" {
-  for_each = var.repos
-
-  repository       = each.value
-  secret_name      = "AZURE_AD_CLIENT_ID"
-  plaintext_value  = data.azuread_application.main.object_id
+data "azurerm_key_vault_secret" "backend_container_name" {
+  name         = "AZURE-BACKEND-CONTAINER-NAME"
+  key_vault_id = data.azurerm_key_vault.main.id
 }
 
-resource "github_actions_secret" "azure_ad_tenant_id" {
-  for_each = var.repos
-
-  repository       = each.value
-  secret_name      = "AZURE_AD_TENANT_ID"
-  plaintext_value  = "c9566794-0e0c-4782-a8c6-11514d711171"
+data "azurerm_key_vault_secret" "ad_tenant_id" {
+  name         = "AZURE-AD-TENANT-ID"
+  key_vault_id = data.azurerm_key_vault.main.id
 }
 
-resource "github_actions_secret" "azure_backend_container_name" {
-  for_each = var.repos
-
-  repository       = each.value
-  secret_name      = "AZURE_BACKEND_CONTAINER_NAME"
-  plaintext_value  = var.some_secret_string
+data "azurerm_key_vault_secret" "subscription_id" {
+  name         = "AZURE-SUBSCRIPTION-ID"
+  key_vault_id = data.azurerm_key_vault.main.id
 }
 
-resource "github_actions_secret" "azure_backend_key" {
+module "github_action_secrets" {
   for_each = var.repos
 
-  repository       = each.value
-  secret_name      = "AZURE_BACKEND_KEY"
-  plaintext_value  = var.some_secret_string
-}
+  source = "./modules/githubsecrets"
 
-resource "github_actions_secret" "azure_backend_resource_group_name" {
-  for_each = var.repos
-
-  repository       = each.value
-  secret_name      = "AZURE_BACKEND_RESOURCE_GROUP_NAME"
-  plaintext_value  = var.some_secret_string
-}
-
-resource "github_actions_secret" "azure_backend_storage_account_name" {
-  for_each = var.repos
-
-  repository       = each.value
-  secret_name      = "AZURE_BACKEND_STORAGE_ACCOUNT_NAME"
-  plaintext_value  = var.some_secret_string
-}
-
-resource "github_actions_secret" "azure_client_secret" {
-  for_each = var.repos
-
-  repository       = each.value
-  secret_name      = "AZURE_CLIENT_SECRET"
-  plaintext_value  = var.some_secret_string
-}
-
-resource "github_actions_secret" "azure_subscription_id" {
-  for_each = var.repos
-
-  repository       = each.value
-  secret_name      = "AZURE_SUBSCRIPTION_ID"
-  plaintext_value  = var.some_secret_string
+  repo_name = each.value
+  application_id = data.azuread_application.main.id
+  ad_tenant_id = data.azurerm_key_vault_secret.ad_tenant_id.value
+  subscription_id = data.azurerm_key_vault_secret.subscription_id.value
+  backend_resource_group_name = data.azurerm_key_vault_secret.backend_resource_group_name.value
+  backend_storage_account_name = data.azurerm_key_vault_secret.backend_storage_account_name.value
+  backend_container_name = data.azurerm_key_vault_secret.backend_container_name.value
 }
