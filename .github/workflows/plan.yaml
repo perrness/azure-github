@@ -11,5 +11,5 @@ jobs:
   Terraform:
     uses: perrness/reusable-workflows/.github/workflows/azure-plan.yaml@input_args
     with:
-      terraform_args: '-var-file="repos.tfvars"'
+      terraform_args: >- -var-file="repos.tfvars"
     secrets: inherit
