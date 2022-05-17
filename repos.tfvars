@@ -1,0 +1,3 @@
+repoes = {
+    "terraform_aks"
+}
