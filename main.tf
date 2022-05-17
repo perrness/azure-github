@@ -33,7 +33,7 @@ data "azurerm_key_vault_secret" "subscription_id" {
 }
 
 module "github_action_secrets" {
-  for_each = var.repos
+  for_each = toset(var.repos)
 
   source = "./modules/githubsecrets"
 
