@@ -10,4 +10,7 @@ permissions:
 jobs:
   Terraform:
     uses: perrness/reusable-workflows/.github/workflows/azure-plan-and-apply.yaml@main
+    with:
+      terraform_args: >-
+        -var-file="repos.tfvars" -var="kv_name=${{ secrets.KV_NAME }}" -var="rg_kv_name=${{ secrets.RG_KV_NAME }}"
     secrets: inherit

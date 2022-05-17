@@ -4,7 +4,7 @@ data "azuread_application" "main" {
 
 data "azurerm_key_vault" "main" {
   name                = var.kv_name
-  resource_group_name = var.rg_name
+  resource_group_name = var.rg_kv_name
 }
 
 data "azurerm_key_vault_secret" "backend_storage_account_name" {
