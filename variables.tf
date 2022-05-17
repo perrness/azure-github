@@ -1,11 +1,11 @@
 variable "repos" {
-    type = list(string)
+  type = list(string)
 }
 
 variable "kv_name" {
-    type = string
+  type = string
 }
 
 variable "rg_name" {
-    type = string
+  type = string
 }

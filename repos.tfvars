@@ -1,3 +1,3 @@
-repoes = {
-    "terraform_aks"
-}
+repoes = [
+  "terraform_aks"
+]
