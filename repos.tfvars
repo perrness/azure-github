@@ -1,3 +1,3 @@
 repos = [
-  "terraform_aks"
+  "terraform-aks"
 ]
