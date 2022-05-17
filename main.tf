@@ -13,7 +13,7 @@ data "azurerm_key_vault_secret" "backend_storage_account_name" {
 }
 
 data "azurerm_key_vault_secret" "backend_resource_group_name" {
-  name         = "ZURE-BACKEND-RESOURCE-GROUP-NAME"
+  name         = "AZURE-BACKEND-RESOURCE-GROUP-NAME"
   key_vault_id = data.azurerm_key_vault.main.id
 }
 
