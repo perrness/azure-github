@@ -3,7 +3,7 @@ data "azuread_application" "main" {
 }
 
 data "azurerm_key_vault" "main" {
-  name                = "per-kv"
+  name                = "perkv"
   resource_group_name = "per-kv-rg"
 }
 
