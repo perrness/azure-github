@@ -39,6 +39,7 @@ module "github_action_secrets" {
 
   repo_name                    = each.value
   application_id               = data.azuread_application.main.application_id
+  object_id                    = data.azuread_application.main.object_id
   ad_tenant_id                 = data.azurerm_key_vault_secret.ad_tenant_id.value
   subscription_id              = data.azurerm_key_vault_secret.subscription_id.value
   backend_resource_group_name  = data.azurerm_key_vault_secret.backend_resource_group_name.value

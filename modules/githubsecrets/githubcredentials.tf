@@ -1,5 +1,5 @@
 resource "azuread_application_federated_identity_credential" "main" {
-  application_object_id = var.application_id
+  application_object_id = var.object_id
   display_name          = "${var.repo_name}-deploy"
   description           = "Deployments for ${var.repo_name}"
   audiences             = ["api://AzureADTokenExchange"]
@@ -9,7 +9,7 @@ resource "azuread_application_federated_identity_credential" "main" {
 
 resource "azuread_application_password" "main" {
   display_name = "${var.repo_name}-client-secret"
-  application_object_id = var.application_id
+  application_object_id = var.object_id
 }
 
 data "github_actions_public_key" "main" {

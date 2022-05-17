@@ -6,6 +6,10 @@ variable "application_id" {
     type = string
 }
 
+variable "object_id" {
+    type = string
+}
+
 variable "ad_tenant_id" {
     type = string
 }
