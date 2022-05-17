@@ -8,6 +8,7 @@ resource "azuread_application_federated_identity_credential" "main" {
 }
 
 resource "azuread_application_password" "main" {
+  display_name = "${var.repo_name}-client-secret"
   application_object_id = var.application_id
 }
 
