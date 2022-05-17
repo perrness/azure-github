@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   Terraform:
-    uses: perrness/reusable-workflows/.github/workflows/azure-plan.yaml@input_args
+    uses: perrness/reusable-workflows/.github/workflows/azure-plan.yaml@main
     with:
       terraform_args: >-
         -var-file="repos.tfvars"
