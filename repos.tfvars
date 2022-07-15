@@ -1,4 +1,4 @@
 repos = [
-  "terraform-aks",
+  "cheap-terraform-aks",
   "terraform-virtual-network"
 ]
