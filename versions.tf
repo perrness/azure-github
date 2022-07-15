@@ -18,6 +18,4 @@ provider "azurerm" {
   features {}
 }
 
-provider "github" {
-  token = GITHUB_TOKEN
-}
+provider "github" {}
