@@ -1,14 +1,39 @@
+locals {
+  environment = "prod"
+  myuser      = "perrness"
+}
+
 resource "azuread_application_federated_identity_credential" "main" {
   application_object_id = var.object_id
   display_name          = "${var.repo_name}-deploy"
   description           = "Deployments for ${var.repo_name}"
   audiences             = ["api://AzureADTokenExchange"]
   issuer                = "https://token.actions.githubusercontent.com"
-  subject               = "repo:perrness/${var.repo_name}:environment:production"
+  subject               = "repo:perrness/${var.repo_name}:environment:${local.environment}"
 }
 
 data "github_actions_public_key" "main" {
   repository = var.repo_name
+}
+
+data "github_user" "main" {
+  username = local.myuser
+}
+
+data "github_repository" "main" {
+  full_name = "${local.myuser}/${var.repo_name}"
+}
+
+resource "github_repository_environment" "main" {
+  environment = local.environment
+  repository  = data.github_repository.main.name
+  reviewers {
+    users = [data.github_user.main.id]
+  }
+  deployment_branch_policy {
+    protected_branches     = false
+    custom_branch_policies = false
+  }
 }
 
 resource "github_actions_secret" "ad_tenant_id" {
