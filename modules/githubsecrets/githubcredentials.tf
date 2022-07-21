@@ -32,7 +32,7 @@ resource "github_repository_environment" "main" {
   }
   deployment_branch_policy {
     protected_branches     = false
-    custom_branch_policies = false
+    custom_branch_policies = true
   }
 }
 
